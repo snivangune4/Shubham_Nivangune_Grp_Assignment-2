@@ -1,4 +1,4 @@
-const resume = [ 
+const resumes = [ 
     {
         "id":1,
         "basics": 
@@ -557,21 +557,21 @@ const resume = [
     }
 ]
 
-function resumeToggle(){
-   var submit_btn = document.getElementById( "submit-button");
-    submit_btn.addEventListener('onclick',
-        hideLoginPage);
+function resumePage(){
+    document.getElementById("submit-button").addEventListener('click', hideLoginPage);
 }
 
 function hideLoginPage() {
-    document.getElementById('login-toggle').classList.toggle('resume-toggle');
+    document.getElementById('login-page').classList.toggle('resume-toggle');
+    document.getElementById('resume-container').classList.toggle('resume-toggle');
+    document.getElementById('resume-button').classList.toggle('resume-toggle');
+    document.getElementById('resume-button').classList.toggle('resume-num');
 }
 
  // Handle form submission
  const form = document.getElementById('login-form');
  form.addEventListener('submit', (event) => {
    event.preventDefault();
-
 
    // Get form data
    const username = form.elements.username.value;
@@ -583,17 +583,15 @@ function hideLoginPage() {
      localStorage.setItem('username', username);
      localStorage.setItem('password', password);
 
-     // Redirect to resume page
-     window.location.href = 'D:/GreatLearning/FrontEnd/JavaScript/Resume_Project/ResumeTemplate.html';
-    
-     window.history.replaceState('D:/GreatLearning/FrontEnd/JavaScript/Resume_Project/ResumeTemplate.html');
+    resumePage();
+
    } else {
      // Show error message
      alert('Invalid username or password');
    }
  });
 
- function validateCredentials(username, password) {
+function validateCredentials(username, password) {
    // Check against a list of valid credentials
    const validCredentials = [
      { username: 'user1', password: 'password1' },
@@ -601,4 +599,102 @@ function hideLoginPage() {
    ];
 
    return validCredentials.some(credentials => credentials.username === username && credentials.password === password);
- }
+}
+
+let resume_index = 0;
+function updateResume(){
+    
+    const resume = resumes[resume_index];
+
+    document.getElementById("applicant-name").innerHTML = `
+        <h1>${resume.basics.name}</h1>
+        <p> ${resume.basics.AppliedFor}</p>`;
+    document.getElementById("personal-info").innerHTML = `
+        <h2>Personal Information</h2>
+        <p>${resume.basics.phone}</p>   
+        <p>${resume.basics.email}</p>  
+        <a href=${resume.basics.profiles.url} style='text-align:right'>${resume.basics.profiles.network}</p>`;
+
+    document.getElementById("tech-skill").innerHTML = `
+        <h2>Technical Skills</h2>
+        <p>${resume.skills.keywords[0]}</p>   
+        <p>${resume.skills.keywords[1]}</p>  
+        <p>${resume.skills.keywords[2]}</p>`;
+
+    document.getElementById("hobby").innerHTML = `
+        <h2>Hobbies</h2>
+        <p>${resume.interests.hobbies[0]}</p>   
+        <p>${resume.interests.hobbies[1]}</p>  
+        <p>${resume.interests.hobbies[2]}</p>`;
+
+    document.getElementById("work-exp").innerHTML = `
+        <h2>Work Experience in previous Company</h2>
+        <p>Company Name: ${resume.work["Company Name"]}</p>
+        <p>Position: ${resume.work.Position}</p>
+        <p>Sart date:  ${resume.work["Start Date"]}</p>
+        <p>End Date:  ${resume.work["End Date"]}</p>
+        <p>Summary:  ${resume.work.Summary}</p>`;
+
+    document.getElementById("projects").innerHTML =`
+        <h2>Projects</h2>
+        <p>${resume.projects.name}: ${resume.projects.description}</p>`
+
+    document.getElementById("education").innerHTML =`
+        <h2>Education</h2>
+        <ul>
+            <li>UG: ${resume.education.UG.institute},${resume.education.UG.course}, ${resume.education.UG["Start Date"]}, ${resume.education.UG["End Date"]}, ${resume.education.UG.cgpa}</li>
+            <li>SS: ${resume.education["Senior Secondary"].institute}, ${resume.education["Senior Secondary"].cgpa}</li>
+            <li>HS: ${resume.education["High School"].institute}, ${resume.education["High School"].cgpa}</li>
+        </ul>`;
+
+    document.getElementById("internship").innerHTML = `
+        <h2>Internship</h2>
+        <ul>
+            <li>Company Name: ${resume.Internship["Company Name"]}</li>
+            <li>Position: ${resume.Internship.Position}</li>
+            <li>Start date: ${resume.Internship["Start Date"]}</li>
+            <li>End date: ${resume.Internship["End Date"]}</li>
+            <li>Summary: ${resume.Internship.Summary}</li>
+        </ul>`;
+    document.getElementById("achievement").innerHTML = `
+    <h2>Achievements</h2>
+    <ul>
+        <li>${resume.achievements.Summary[0]}</li>
+    </ul>`;
+
+    
+}
+
+updateResume();
+
+function nextResume(){
+    ++resume_index;
+
+    if( resume_index === resumes.length-1){
+        document.getElementById("next-btn").classList.toggle("button-toggle");
+    }
+    else {
+        document.getElementById("prev-btn").classList.remove("button-toggle");
+    }
+    updateResume();
+    
+}
+
+function previousResume(){
+    --resume_index;
+
+    if( resume_index < 1){
+        document.getElementById("prev-btn").classList.toggle("button-toggle");
+    }
+    else {
+        document.getElementById("next-btn").classList.remove("button-toggle");
+    }
+
+    updateResume();
+}
+
+document.getElementById("next-btn").addEventListener( 'click', nextResume);
+
+document.getElementById("prev-btn").addEventListener( 'click', previousResume);
+
+
