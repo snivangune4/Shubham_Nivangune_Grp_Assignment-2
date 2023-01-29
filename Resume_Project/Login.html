@@ -9,19 +9,97 @@
         
     </head>
     <body>
-        <div class="background">
-            <section class="login"> 
+        <div id="login-page" class="background" >
+            <section class="login"  > 
                 <h2>Login page</h2>
-                <form id="login-form" action="ResumeTemplate.html">
+                <form id="login-form" >
                     <label for="u_name">Username: </label><br>
                     <input type="text" name="u_name" id="username" placeholder="Enter Username" required><br>
                     
                     <label for="u_pswd">Password: </label><br>
                     <input type="password" name="u_pswd" id="password" placeholder="Enter password" minlength="8" required><br>
 
-                    <button id="submit-button">Log In</button>
+                    <button id="submit-button" >Log In</button>
                 </form>
             </section>  
+        </div>
+
+        <div id="resume-button" class="resume-toggle "  >
+            <button id="prev-btn" class="button-toggle" type="button">Previous</button>
+            <label for="job-search"></label>
+            <form id="job-search">
+                <input type="search" id="searchtext" name="job-search" placeholder="Search for keyword to filter resume"> 
+            </form>
+            <button id="next-btn" type="button">Next</button>              
+        </div>
+    
+        <div id="resume-container" class="resume-container resume-toggle" >
+            <div id="applicant-name">
+                <h1 >Applicant's name</h1>
+                <p>positin applied for</p>
+            </div>
+            
+            <div class="sections">
+            <section  id="left-pane">
+                <div id="personal-info" class="left">
+                    <h2>Personal Information</h2>
+                    <p id="number">number</p>   
+                    <p id="email">email</p>  
+                    <p id="linkedin">linkedin</p>   
+                </div>
+                <div id="tech-skill" class="left">
+                    <h2>Technical Skills</h2>
+                    <p id="s1">skill1</p>   
+                    <p id="s2">skill2</p>  
+                    <p id="s3">skill3</p>   
+                </div>
+                <div id="hobby" class="left">
+                    <h2>Hobbies</h2>
+                    <p id="h1">hobby 1</p>   
+                    <p id="h2">hobby 2</p>  
+                    <p id="h3">hobby 3</p>   
+                </div>
+            </section>
+            <section id="main">
+               <div id="work-exp">
+                    <h2>Work Experience in previous Company</h2>
+                    <p>Company Name:</p>
+                    <p>Position:</p>
+                    <p>Sart date:</p>
+                    <p>End Date:</p>
+                    <p>Summary:</p>
+               </div>
+               <div id="projects">
+                    <h2>Projects</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non necessitatibus cupiditate ipsum porro et qui voluptates, quasi officia, fuga sapiente dolore vel tenetur nostrum, eveniet odio nemo iure suscipit alias!</p>
+               </div>
+               <div id="education">
+                    <h2>Education</h2>
+                    <ul>
+                        <li>UG</li>
+                        <li>SS</li>
+                        <li>HS</li>
+                    </ul>
+                </div>
+                <div id="internship">
+                    <h2>Internship</h2>
+                    <ul>
+                        <li>Company Name</li>
+                        <li>Position</li>
+                        <li>Start date</li>
+                        <li>End date</li>
+                        <li>Summary</li>
+                    </ul>
+                </div>
+                <div id="achievement">
+                    <h2>Achievements</h2>
+                    <ul>
+                        <li>achievement</li>
+                    </ul>
+                </div>
+    
+            </section>
+            </div>
         </div>
         <script src="login.js"></script>
     </body>
