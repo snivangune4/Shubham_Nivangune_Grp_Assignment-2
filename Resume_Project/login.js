@@ -557,10 +557,6 @@ const resumes = [
     }
 ]
 
-function resumePage(){
-    document.getElementById("submit-button").addEventListener('click', hideLoginPage);
-}
-
 function hideLoginPage() {
     document.getElementById('login-page').classList.toggle('resume-toggle');
     document.getElementById('resume-container').classList.toggle('resume-toggle');
@@ -568,28 +564,28 @@ function hideLoginPage() {
     document.getElementById('resume-button').classList.toggle('resume-num');
 }
 
- // Handle form submission
- const form = document.getElementById('login-form');
- form.addEventListener('submit', (event) => {
-   event.preventDefault();
+//  Handle form submission
+const form = document.getElementById('login-form');
+form.addEventListener('submit', (event) => {
+    event.preventDefault();
 
    // Get form data
-   const username = form.elements.username.value;
-   const password = form.elements.password.value;
+    const username = form.elements.username.value;
+    const password = form.elements.password.value;
 
    // Validate credentials
-   if (validateCredentials(username, password)) {
+    if (validateCredentials(username, password)) {
      // Store credentials in local storage
-     localStorage.setItem('username', username);
-     localStorage.setItem('password', password);
+        localStorage.setItem('username', username);
+        localStorage.setItem('password', password);
 
-    resumePage();
+        hideLoginPage();
 
-   } else {
+    } else {
      // Show error message
-     alert('Invalid username or password');
-   }
- });
+        alert('Invalid username or password');
+    }
+});
 
 function validateCredentials(username, password) {
    // Check against a list of valid credentials
