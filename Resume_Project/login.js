@@ -1,4 +1,4 @@
-const resumes = [ 
+let resumes = [ 
     {
         "id":1,
         "basics": 
@@ -597,14 +597,16 @@ function validateCredentials(username, password) {
    return validCredentials.some(credentials => credentials.username === username && credentials.password === password);
 }
 
-let resume_index = 0;
-function updateResume(){
+let current_resume_index = 0;
+let ResumeArray = resumes;
+function updateResume(ResumeArray){
     
-    const resume = resumes[resume_index];
-
+    let resume = ResumeArray[current_resume_index];
+    
     document.getElementById("applicant-name").innerHTML = `
         <h1>${resume.basics.name}</h1>
         <p> ${resume.basics.AppliedFor}</p>`;
+
     document.getElementById("personal-info").innerHTML = `
         <h2>Personal Information</h2>
         <p>${resume.basics.phone}</p>   
@@ -661,36 +663,198 @@ function updateResume(){
     
 }
 
-updateResume();
-
-function nextResume(){
-    ++resume_index;
-
-    if( resume_index === resumes.length-1){
-        document.getElementById("next-btn").classList.toggle("button-toggle");
-    }
-    else {
-        document.getElementById("prev-btn").classList.remove("button-toggle");
-    }
-    updateResume();
-    
-}
-
-function previousResume(){
-    --resume_index;
-
-    if( resume_index < 1){
-        document.getElementById("prev-btn").classList.toggle("button-toggle");
-    }
-    else {
-        document.getElementById("next-btn").classList.remove("button-toggle");
-    }
-
-    updateResume();
-}
+updateResume(ResumeArray);
 
 document.getElementById("next-btn").addEventListener( 'click', nextResume);
 
 document.getElementById("prev-btn").addEventListener( 'click', previousResume);
 
+let resume_index;
 
+const search = document.getElementById('job-search');
+search.addEventListener('submit', (event) => {
+    event.preventDefault();
+    searchBtnToggle();
+    // hidePreciousBtn();
+
+    let jobsAvailable = resumes.map((item)=>item.basics.AppliedFor);
+    const uniqueJobs = new Set(jobsAvailable);
+    let uniqueJobsArray = [];
+
+    uniqueJobs.forEach(function(value) {
+        uniqueJobsArray.push(value);
+    });
+    console.log(uniqueJobsArray);
+    const searchValue = search.elements.jobSearch.value;
+    console.log(searchValue);
+    
+    
+    if ( searchValue === "")
+    {
+        
+        errorImageToggle();
+        document.getElementById("show-resumes-btn").addEventListener('click',noResumeFound); 
+    } 
+
+    else if( searchValue === uniqueJobsArray[0] || searchValue === uniqueJobsArray[1] || searchValue === uniqueJobsArray[2])
+    {
+        hidePreciousBtn();
+
+        if(current_resume_index === 0){
+        hidePreciousBtn();
+        }
+
+        ResumeArray = resumes.filter(ele => ele.basics.AppliedFor===searchValue);
+
+        if(ResumeArray.length===1){
+            hideNextBtn();
+            // hidePreciousBtn();
+        }
+        
+        resume_index = 0;
+        let resume = ResumeArray[resume_index];
+
+        document.getElementById("applicant-name").innerHTML = `
+            <h1>${resume.basics.name}</h1>
+            <p> ${resume.basics.AppliedFor}</p>`;
+
+        document.getElementById("personal-info").innerHTML = `
+            <h2>Personal Information</h2>
+            <p>${resume.basics.phone}</p>   
+            <p>${resume.basics.email}</p>  
+            <a href=${resume.basics.profiles.url} style='text-align:right'>${resume.basics.profiles.network}</p>`;
+
+        document.getElementById("tech-skill").innerHTML = `
+            <h2>Technical Skills</h2>
+            <p>${resume.skills.keywords[0]}</p>   
+            <p>${resume.skills.keywords[1]}</p>  
+            <p>${resume.skills.keywords[2]}</p>`;
+
+        document.getElementById("hobby").innerHTML = `
+            <h2>Hobbies</h2>
+            <p>${resume.interests.hobbies[0]}</p>   
+            <p>${resume.interests.hobbies[1]}</p>  
+            <p>${resume.interests.hobbies[2]}</p>`;
+
+        document.getElementById("work-exp").innerHTML = `
+            <h2>Work Experience in previous Company</h2>
+            <p>Company Name: ${resume.work["Company Name"]}</p>
+            <p>Position: ${resume.work.Position}</p>
+            <p>Sart date:  ${resume.work["Start Date"]}</p>
+            <p>End Date:  ${resume.work["End Date"]}</p>
+            <p>Summary:  ${resume.work.Summary}</p>`;
+
+        document.getElementById("projects").innerHTML =`
+            <h2>Projects</h2>
+            <p>${resume.projects.name}: ${resume.projects.description}</p>`
+
+        document.getElementById("education").innerHTML =`
+            <h2>Education</h2>
+            <ul>
+                <li>UG: ${resume.education.UG.institute},${resume.education.UG.course}, ${resume.education.UG["Start Date"]}, ${resume.education.UG["End Date"]}, ${resume.education.UG.cgpa}</li>
+                <li>SS: ${resume.education["Senior Secondary"].institute}, ${resume.education["Senior Secondary"].cgpa}</li>
+                <li>HS: ${resume.education["High School"].institute}, ${resume.education["High School"].cgpa}</li>
+            </ul>`;
+
+        document.getElementById("internship").innerHTML = `
+            <h2>Internship</h2>
+                <ul>
+                <li>Company Name: ${resume.Internship["Company Name"]}</li>
+                <li>Position: ${resume.Internship.Position}</li>
+                <li>Start date: ${resume.Internship["Start Date"]}</li>
+                <li>End date: ${resume.Internship["End Date"]}</li>
+                <li>Summary: ${resume.Internship.Summary}</li>
+            </ul>`;
+        document.getElementById("achievement").innerHTML = `
+            <h2>Achievements</h2>
+            <ul>
+                <li>${resume.achievements.Summary[0]}</li>
+            </ul>`;
+
+            document.getElementById("show-resumes-btn").addEventListener('click',resetResumeList);
+    }
+    else 
+    {
+        
+        errorImageToggle();
+        document.getElementById("show-resumes-btn").addEventListener('click',noResumeFound);
+       
+    } 
+})
+
+function noResumeFound(){
+    errorImageToggle();
+    resetResumeList();
+    
+}
+
+function resetResumeList() {
+    document.getElementById("show-all-resumes").classList.toggle('button-toggle');
+
+    if( resume_index == ResumeArray.length - 1){
+        hideNextBtn();
+        hidePreciousBtn();
+        ResumeArray = resumes;
+        current_resume_index = 0;
+        updateResume(ResumeArray);
+        document.getElementById('job-search').elements.jobSearch.value = "";
+    }
+    else{
+        ResumeArray = resumes;
+        current_resume_index = 0;
+        updateResume(ResumeArray);
+        document.getElementById('job-search').elements.jobSearch.value = "";
+    }
+    
+    
+    
+}
+
+function searchBtnToggle(){
+    document.getElementById("show-all-resumes").classList.toggle('button-toggle');
+}
+
+function errorImageToggle(){
+    document.getElementById("error-image").classList.toggle("error-image-toggle");
+    document.getElementById('resume-container').classList.toggle('resume-toggle');
+    document.getElementById('resume-button').classList.toggle('resume-toggle');
+    document.getElementById('resume-button').classList.toggle('resume-num');
+    
+}
+
+function nextResume(){
+    ++current_resume_index;
+    ++resume_index;
+ 
+    if( current_resume_index >= ResumeArray.length-1){
+        document.getElementById("next-btn").classList.toggle("button-toggle");
+        current_resume_index = ResumeArray.length-1;
+    }
+    
+    document.getElementById("prev-btn").classList.remove("button-toggle");
+    
+    updateResume(ResumeArray);
+    
+}
+
+function previousResume(){
+    --current_resume_index;
+    --resume_index;
+
+    if( current_resume_index < 1){
+        document.getElementById("prev-btn").classList.toggle("button-toggle");
+        current_resume_index = 0;
+    }
+    
+    document.getElementById("next-btn").classList.remove("button-toggle");
+
+    updateResume(ResumeArray);
+}
+
+function hidePreciousBtn(){
+    document.getElementById("prev-btn").classList.toggle("button-toggle");
+}
+
+function hideNextBtn(){
+    document.getElementById("next-btn").classList.toggle("button-toggle");
+}

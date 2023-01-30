@@ -47,6 +47,9 @@ input{
     display: none
 }
 
+.error-image-toggle{
+    display: none
+}
 
 html{
     height: 100%;
@@ -67,6 +70,31 @@ body{
     justify-content: center;
     align-items: baseline;
 }
+
+.show-error-image{
+    margin: auto;
+    width: 80%;
+    border: 2px solid black;
+    border-radius: 5px;
+    text-align: center;
+    height: 50%;
+    position: relative;
+    top: 25%
+}
+.show-error-image p{
+    padding: 120px;
+    font-size: 40px;
+}
+
+#show-all-resumes{
+    margin: auto;
+    border-radius: 5px;
+    text-align: center;
+    position: relative;
+    top: 20%;
+    align-self: center;
+    padding: 5px
+}
 #prev-btn, #next-btn{    
     margin: 20px;
     
@@ -74,18 +102,21 @@ body{
 .resume-container{
     margin: auto;
     width: 70%;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     height: auto;
     border-radius: 5px;
 }
 #applicant-name{
     margin-top: 0px;
-    width: 100%;
+    width: 70%;
     background-color: rgb(146, 229, 229);
     text-align: center;
+    position: absolute;
 }
 .sections{    
     display: flex;
+    top: 120px;
+    position: relative
 }
 
 #left-pane{

@@ -19,7 +19,7 @@
                     <label for="u_pswd">Password: </label><br>
                     <input type="password" name="u_pswd" id="password" placeholder="Enter password" minlength="8" required><br>
 
-                    <button id="submit-button" >Log In</button>
+                    <button id="submit-button">Log In</button>
                 </form>
             </section>  
         </div>
@@ -28,7 +28,9 @@
             <button id="prev-btn" class="button-toggle" type="button">Previous</button>
             <label for="job-search"></label>
             <form id="job-search">
-                <input type="search" id="searchtext" name="job-search" placeholder="Search for keyword to filter resume"> 
+                <input type="search" id="searchtext" name="jobSearch" placeholder="Search for keyword to filter resume"> 
+                <button id="search-btn" type="submit">Search</button>
+                
             </form>
             <button id="next-btn" type="button">Next</button>              
         </div>
@@ -101,6 +103,16 @@
             </section>
             </div>
         </div>
+
+        <div id="show-all-resumes" class="button-toggle">
+            <button id="show-resumes-btn" type="button">Show All Resumes</button>
+        </div>
+
+        <div id="error-image" class="error-image-toggle show-error-image" > 
+            <p>No Resume found</p>
+            
+        </div>
+        
         <script src="login.js"></script>
     </body>
 </html>
